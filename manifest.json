@@ -8,7 +8,6 @@
     "scripts": ["scripts/background.js"]
   },
   "permissions": [
-    "activeTab",
     "declarativeContent"
   ],
   "content_scripts": [
