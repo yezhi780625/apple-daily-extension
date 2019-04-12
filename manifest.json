@@ -13,7 +13,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["https://tw.appledaily.com/*","https://tw.news.appledaily.com/*"],
+      "matches": ["https://*.appledaily.com/*"],
       "js": ["scripts/showContents.js"],
       "run_at": "document_end"
     }
