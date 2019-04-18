@@ -1,14 +1,18 @@
 $(async () => {
-  const $login = $('.ndPaywall')
-  if ($login.length > 0) {
-    const body = await fetch(location)
-    const html = await body.text()
-    const $html = $(html)
-    const $article = $html.find('.ndArticle_margin')
-    $login.replaceWith($article)
-    $article.show()
-    const $video = $html.find('.thoracis')
-    $('.thoracis').replaceWith($video)
-    $video.find('.mediabox').show()
-  }
+  const body = await fetch(location)
+  const html = await body.text()
+  const $html = $(html)
+  const $wrapper = $html.filter((i, el) => $(el).hasClass('wrapper'))
+
+  $wrapper.find('script').filter((i, el) => el.innerText.indexOf('document.write') >= 0).remove()
+  const injectJs = $(`
+    <script>
+      confirmOMOmember = () => {
+        console.log('%c fake login confirm ;)', 'background: #222; color: #bada55')
+        return true
+      }
+      console.log('%c inject confirmOMOmember success!', 'background: #222; color: #bada55')
+    </script>
+  `)
+  $('.wrapper').html('').append(injectJs).append($wrapper)
 })
