@@ -1,5 +1,5 @@
 !.*
-/scripts/jquery-*.*.*.min.js
+/src/assets/js/*.js
 
 .vscode/*
 !.vscode/settings.json

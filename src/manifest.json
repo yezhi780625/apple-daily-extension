@@ -12,8 +12,8 @@
     {
       "matches": ["https://*.appledaily.com/*"],
       "js": [
+        "assets/js/jquery-3.4.0.min.js",
         "scripts/utils.js",
-        "scripts/jquery-3.4.0.min.js",
         "scripts/showContents.js"
       ],
       "run_at": "document_end"
