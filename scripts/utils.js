@@ -18,6 +18,10 @@ const getAllAppleDailyTabs = () =>
   new Promise(resolve =>
     chrome.tabs.query({ url: 'https://*.appledaily.com/*' }, resolve)
   );
+const getCurrentTab = () =>
+  new Promise(resolve =>
+    chrome.tabs.query({ active: true }, ([current]) => resolve(current))
+  );
 const reloadTab = tab =>
   new Promise(resolve => chrome.tabs.reload(tab.id, {}, resolve));
 const reloadAllAppleDailyTabs = async () => {
@@ -31,12 +35,13 @@ const setIcon = status =>
 const setDisabledIcon = async () => setIcon('disable');
 const setEnabledIcon = async () => setIcon('enable');
 const setActiveIcon = async () => setIcon('active');
-const setTabIcon = async tabId => {
+const setTabIcon = async () => {
+  const currentTab = await getCurrentTab();
   const enabled = await getEnabled();
   const allAppleDailyTabs = await getAllAppleDailyTabs();
   if (!enabled) {
     await setDisabledIcon();
-  } else if (allAppleDailyTabs.map(tab => tab.id).includes(tabId)) {
+  } else if (allAppleDailyTabs.map(tab => tab.id).includes(currentTab.id)) {
     await setActiveIcon();
   } else {
     await setEnabledIcon();

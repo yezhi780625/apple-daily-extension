@@ -8,11 +8,16 @@ chrome.browserAction.onClicked.addListener(async tab => {
     const enabling = !enabled;
     await setEnabled(enabling);
     await reloadAllAppleDailyTabs(tab);
-    setTabIcon(tab.id);
+    setTabIcon();
   } catch (e) {
     console.error(e);
   }
   changing = false;
 });
 
-chrome.tabs.onActivated.addListener(async ({ tabId }) => setTabIcon(tabId));
+chrome.tabs.onCreated.addListener(setTabIcon);
+chrome.tabs.onUpdated.addListener(setTabIcon);
+chrome.tabs.onActivated.addListener(setTabIcon);
+chrome.tabs.onHighlighted.addListener(setTabIcon);
+chrome.tabs.onReplaced.addListener(setTabIcon);
+setTabIcon();
