@@ -4,10 +4,9 @@
   "description": "Show content without login.",
   "manifest_version": 2,
   "background": {
-    "persistent": false,
     "scripts": ["scripts/utils.js", "scripts/background.js"]
   },
-  "permissions": ["declarativeContent", "storage", "tabs"],
+  "permissions": ["storage", "tabs"],
   "content_scripts": [
     {
       "matches": ["https://*.appledaily.com/*"],
