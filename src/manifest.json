@@ -1,6 +1,6 @@
 {
   "name": "Apple Daily",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Show content without login.",
   "manifest_version": 2,
   "background": {
