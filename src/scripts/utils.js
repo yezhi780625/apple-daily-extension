@@ -3,8 +3,9 @@ const STORAGE_KEY = 'apple-daily';
 
 const getEnabled = () =>
   new Promise(resolve =>
-    chrome.storage.sync.get([STORAGE_KEY], ({ [STORAGE_KEY]: result }) =>
-      resolve(['true', undefined].includes(result))
+    chrome.storage.sync.get(
+      [STORAGE_KEY],
+      ({ [STORAGE_KEY]: result = 'true' } = {}) => resolve(result === 'true')
     )
   );
 const setEnabled = enabling =>
