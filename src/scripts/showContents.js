@@ -7,29 +7,23 @@ $(async () => {
   const $wrapper = $html.filter((i, el) => $(el).hasClass('wrapper'));
 
   const $scripts = $wrapper.find('script');
-  $scripts
-    .filter((i, el) => el.innerText.indexOf('document.write') >= 0)
-    .remove();
   $scripts.each((i, el) => {
     const $el = $(el);
     $el.html(
       $el
         .html()
-        .replace('OMOSDK.auth().getUserInfo().isLoggedIn || false;', 'true;')
+        .replace(/document.write\(/g, '(() => {})(')
+        .replace('switch(e){', 'switch("ad"){')
+        .replace('OMOSDK.auth().getUserInfo().isLoggedIn', 'true')
+        .replace('omoUserType != "2"', 'true')
+        .replace('if(isUserEntitled){', 'if(true){')
+        .replace(
+          /var ([A-Za-z0-9]+) = setInterval\(function\(\) {/g,
+          'clearInterval($1); var $1 = setInterval(function() { return;'
+        )
     );
   });
-
-  const injectJs = $(`
-    <script>
-      confirmOMOmember = () => {
-        console.log('%c fake login confirm ;)', 'background: #222; color: #bada55')
-        return true
-      }
-      console.log('%c inject confirmOMOmember success!', 'background: #222; color: #bada55')
-    </script>
-  `);
   $('.wrapper')
     .html('')
-    .append(injectJs)
     .append($wrapper);
 });
