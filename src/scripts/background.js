@@ -1,23 +1,17 @@
-let changing = false;
+const cookiesKeys = ['article', 'articleExpires', 'articleValid', 'articleID'];
 
-chrome.browserAction.onClicked.addListener(async tab => {
-  if (changing) return;
-  changing = true;
-  try {
-    const enabled = await getEnabled();
-    const enabling = !enabled;
-    await setEnabled(enabling);
-    await reloadAllAppleDailyTabs(tab);
-    setTabIcon();
-  } catch (e) {
-    console.error(e);
+chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+  switch (msg.type) {
+    case 'resetCookies':
+      cookiesKeys.forEach(name =>
+        chrome.cookies.remove({
+          url: 'http://appledaily.com',
+          name,
+        })
+      );
+      break;
+    default:
+      console.error('unknown type:', msg.type);
   }
-  changing = false;
+  sendResponse('reset cookies successfully!');
 });
-
-chrome.tabs.onCreated.addListener(setTabIcon);
-chrome.tabs.onUpdated.addListener(setTabIcon);
-chrome.tabs.onActivated.addListener(setTabIcon);
-chrome.tabs.onHighlighted.addListener(setTabIcon);
-chrome.tabs.onReplaced.addListener(setTabIcon);
-setTabIcon();

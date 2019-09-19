@@ -1,6 +1,6 @@
 # apple-daily-extension
 
-show apple daily content without login
+😹
 
 ## Usage
 

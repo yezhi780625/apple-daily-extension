@@ -1,23 +1,19 @@
 {
   "name": "Apple Daily",
-  "version": "1.0.3",
-  "description": "Show content without login.",
+  "version": "2.0.0",
+  "description": "😹",
   "manifest_version": 2,
   "background": {
-    "scripts": ["scripts/utils.js", "scripts/background.js"]
+    "scripts": ["scripts/background.js"]
   },
-  "permissions": ["storage", "tabs"],
   "content_scripts": [
     {
       "matches": ["https://*.appledaily.com/*"],
-      "js": [
-        "assets/js/jquery-3.4.0.min.js",
-        "scripts/utils.js",
-        "scripts/showContents.js"
-      ],
+      "js": ["scripts/content.js"],
       "run_at": "document_end"
     }
   ],
+  "permissions": ["cookies", "*://*.appledaily.com/*"],
   "browser_action": {
     "default_icon": {
       "32": "images/enable.png"
